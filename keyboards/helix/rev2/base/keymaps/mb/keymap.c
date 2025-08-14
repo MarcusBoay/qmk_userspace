@@ -23,25 +23,17 @@
 enum layer_number {
     _QWERTY = 0,
     _COLEMAK,
-    // _MAPLE,
     _LOWER,
     _RAISE,
     _ADJUST,
-    // _HYPRLAND,
 };
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
-  // MAPLE,
   LOWER,
   RAISE,
   ADJUST,
-  // HYPRLAND,
-  BACKLIT,
-  EISU,
-  KANA,
-  RGBRST,
 };
 
 // //Macros
@@ -143,15 +135,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    // case MAPLE:
-    //   if (record->event.pressed) {
-    //     #ifdef AUDIO_ENABLE
-    //       PLAY_SONG(tone_colemak);
-    //     #endif
-    //     persistent_default_layer_set(1UL<<_MAPLE);
-    //   }
-    //   return false;
-    //   break;
     case LOWER:
       if (record->event.pressed) {
           //not sure how to have keyboard check mode and set it to a variable, so my work around
@@ -206,14 +189,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         return false;
         break;
-    // case HYPRLAND:
-    //     if (record->event.pressed) {
-    //       layer_on(_HYPRLAND);
-    //     } else {
-    //       layer_off(_HYPRLAND);
-    //     }
-    //     return false;
-    //     break;
       //led operations - RGB mode change now updates the RGB_current_mode to allow the right RGB mode to be set after reactive keys are released
     case RGB_MOD:
       #ifdef RGBLIGHT_ENABLE
@@ -224,39 +199,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       #endif
       return false;
-      break;
-    case EISU:
-      if (record->event.pressed) {
-        if (is_mac_mode()) {
-          register_code(KC_LNG2);
-        } else {
-          SEND_STRING(SS_LALT("`"));
-        }
-      } else {
-        unregister_code(KC_LNG2);
-      }
-      return false;
-      break;
-    case KANA:
-      if (record->event.pressed) {
-        if (is_mac_mode()) {
-          register_code(KC_LNG1);
-        } else {
-          SEND_STRING(SS_LALT("`"));
-        }
-      } else {
-        unregister_code(KC_LNG1);
-      }
-      return false;
-      break;
-    case RGBRST:
-      #ifdef RGBLIGHT_ENABLE
-        if (record->event.pressed) {
-          eeconfig_update_rgblight_default();
-          rgblight_enable();
-          RGB_current_mode = rgblight_get_mode();
-        }
-      #endif
       break;
   }
   return true;

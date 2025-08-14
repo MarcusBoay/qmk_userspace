@@ -1,6 +1,7 @@
 {
     "userspace_version": "1.1",
     "build_targets": [
-        ["helix/rev2/base", "mb"]
+        ["helix/rev2/base", "mb"],
+        ["helix/rev2/base", "mb2"]
     ]
 }
