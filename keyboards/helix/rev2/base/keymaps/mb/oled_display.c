@@ -33,13 +33,13 @@ enum layer_number {
 };
 
 // assign the right code to your layers for OLED display
-#define L_BASE    0
-#define L_QWERTY  (1 << _QWERTY)
+#define L_BASE 0
+#define L_QWERTY (1 << _QWERTY)
 #define L_COLEMAK (1 << _COLEMAK)
 // #define L_MAPLE   (1 << _MAPLE)
-#define L_LOWER   (1 << _LOWER)
-#define L_RAISE   (1 << _RAISE)
-#define L_ADJUST  (1 << _ADJUST)
+#define L_LOWER (1 << _LOWER)
+#define L_RAISE (1 << _RAISE)
+#define L_ADJUST (1 << _ADJUST)
 // #define L_HYPRLAND   (1 << _HYPRLAND)
 #define L_ADJUST_TRI (L_ADJUST | L_RAISE | L_LOWER)
 
@@ -54,33 +54,31 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 static void render_rgbled_status(bool full) {
-#ifdef RGBLIGHT_ENABLE
+#    ifdef RGBLIGHT_ENABLE
     char buf[30];
     if (RGBLIGHT_MODES > 1 && rgblight_is_enabled()) {
         if (full) {
-            snprintf(buf, sizeof(buf), " LED %2d: %d,%d,%d ", rgblight_get_mode(),
-                     rgblight_get_hue() / RGBLIGHT_HUE_STEP, rgblight_get_sat() / RGBLIGHT_SAT_STEP,
-                     rgblight_get_val() / RGBLIGHT_VAL_STEP);
+            snprintf(buf, sizeof(buf), " LED %2d: %d,%d,%d ", rgblight_get_mode(), rgblight_get_hue() / RGBLIGHT_HUE_STEP, rgblight_get_sat() / RGBLIGHT_SAT_STEP, rgblight_get_val() / RGBLIGHT_VAL_STEP);
         } else {
             snprintf(buf, sizeof(buf), "[%2d] ", rgblight_get_mode());
         }
         oled_write(buf, false);
     }
-#endif
+#    endif
 }
 
 static void render_layer_status(void) {
     char buf[10];
     switch (default_layer_state) {
-    case L_QWERTY:
-        oled_write_P(PSTR("QWERTY"), false);
-        break;
-    case L_COLEMAK:
-        oled_write_P(PSTR("Colemak"), false);
-        break;
-    // case L_MAPLE:
-    //     oled_write_P(PSTR("MapleStory"), false);
-    //     break;
+        case L_QWERTY:
+            oled_write_P(PSTR("QWERTY"), false);
+            break;
+        case L_COLEMAK:
+            oled_write_P(PSTR("Colemak"), false);
+            break;
+            // case L_MAPLE:
+            //     oled_write_P(PSTR("MapleStory"), false);
+            //     break;
     }
 
     if (layer_state != L_BASE) {
@@ -88,44 +86,46 @@ static void render_layer_status(void) {
     }
 
     switch (layer_state) {
-    case L_BASE:
-        break;
-    case L_RAISE:
-        oled_write_P(PSTR("Raise"), false);
-        break;
-    case L_LOWER:
-        oled_write_P(PSTR("Lower"), false);
-        break;
-    case L_ADJUST:
-    case L_ADJUST_TRI:
-        oled_write_P(PSTR("Adjust"), false);
-        break;
-    default:
-        oled_write_P(PSTR("Undef-"), false);
-        snprintf(buf, sizeof(buf), "%u", layer_state);
-        oled_write(buf, false);
+        case L_BASE:
+            break;
+        case L_RAISE:
+            oled_write_P(PSTR("Raise"), false);
+            break;
+        case L_LOWER:
+            oled_write_P(PSTR("Lower"), false);
+            break;
+        case L_ADJUST:
+        case L_ADJUST_TRI:
+            oled_write_P(PSTR("Adjust"), false);
+            break;
+        default:
+            oled_write_P(PSTR("Undef-"), false);
+            snprintf(buf, sizeof(buf), "%u", layer_state);
+            oled_write(buf, false);
     }
     oled_write_P(PSTR("\n"), false);
 }
 
 void render_status(void) {
     // Render to mode icon
-    static const char os_logo[][2][3] PROGMEM = {{{0x95, 0x96, 0}, {0xb5, 0xb6, 0}},
-                                                 {{0x99, 0x9a, 0}, {0xb9, 0xba, 0}}};
+    static const char os_logo[][2][3] PROGMEM = {{{0x95, 0x96, 0}, {0xb5, 0xb6, 0}}, {{0x99, 0x9a, 0}, {0xb9, 0xba, 0}}};
     // oled_write_P(PSTR("    "), false);
     switch (detected_host_os()) {
         case OS_MACOS:
             oled_write_P(os_logo[0][0], false);
+            if (keymap_config.swap_lctl_lgui) oled_write_P(PSTR(" CTL-GUI SWAPPED"), false);
             oled_write_P(PSTR("\n"), false);
             oled_write_P(os_logo[0][1], false);
             break;
         case OS_LINUX:
             oled_write_P(os_logo[1][0], false);
+            if (keymap_config.swap_lctl_lgui) oled_write_P(PSTR(" CTL-GUI SWAPPED"), false);
             oled_write_P(PSTR("\n"), false);
             oled_write_P(os_logo[1][1], false);
             break;
         default:
             oled_write_P(PSTR("wtf?"), false);
+            if (keymap_config.swap_lctl_lgui) oled_write_P(PSTR(" CTL-GUI SWAPPED"), false);
             oled_write_P(PSTR("\n"), false);
             oled_write_P(PSTR("bruh"), false);
             break;
@@ -145,12 +145,11 @@ void render_status(void) {
 }
 
 bool oled_task_user(void) {
-
-#if DEBUG_TO_SCREEN
+#    if DEBUG_TO_SCREEN
     if (debug_enable) {
         return;
     }
-#endif
+#    endif
 
     if (is_keyboard_master()) {
         render_status();
@@ -184,9 +183,9 @@ bool oled_task_user(void) {
  */
 
 #ifdef SSD1306OLED
-#include "ssd1306.h"
-#define oled_write(data, flag)   matrix_write(matrix, data)
-#define oled_write_P(data, flag) matrix_write_P(matrix, data)
+#    include "ssd1306.h"
+#    define oled_write(data, flag) matrix_write(matrix, data)
+#    define oled_write_P(data, flag) matrix_write_P(matrix, data)
 
 void matrix_scan_user(void) {
     iota_gfx_task(); // this is what updates the display continuously
@@ -200,30 +199,22 @@ void matrix_update(struct CharacterMatrix* dest, const struct CharacterMatrix* s
 }
 
 static void render_logo(struct CharacterMatrix* matrix) {
-
-    static const char helix_logo[] PROGMEM = {
-        0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c,
-        0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94, 0xa0, 0xa1, 0xa2, 0xa3, 0xa4,
-        0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1,
-        0xb2, 0xb3, 0xb4, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9,
-        0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0};
+    static const char helix_logo[] PROGMEM = {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94, 0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0};
     oled_write_P(helix_logo, false);
 }
 
 static void render_rgbled_status(bool full, struct CharacterMatrix* matrix) {
-#ifdef RGBLIGHT_ENABLE
+#    ifdef RGBLIGHT_ENABLE
     char buf[30];
     if (RGBLIGHT_MODES > 1 && rgblight_is_enabled()) {
         if (full) {
-            snprintf(buf, sizeof(buf), " LED %2d: %d,%d,%d ", rgblight_get_mode(),
-                     rgblight_get_hue() / RGBLIGHT_HUE_STEP, rgblight_get_sat() / RGBLIGHT_SAT_STEP,
-                     rgblight_get_val() / RGBLIGHT_VAL_STEP);
+            snprintf(buf, sizeof(buf), " LED %2d: %d,%d,%d ", rgblight_get_mode(), rgblight_get_hue() / RGBLIGHT_HUE_STEP, rgblight_get_sat() / RGBLIGHT_SAT_STEP, rgblight_get_val() / RGBLIGHT_VAL_STEP);
         } else {
             snprintf(buf, sizeof(buf), "[%2d] ", rgblight_get_mode());
         }
         oled_write(buf, false);
     }
-#endif
+#    endif
 }
 
 static void render_layer_status(struct CharacterMatrix* matrix) {
@@ -232,31 +223,30 @@ static void render_layer_status(struct CharacterMatrix* matrix) {
     char buf[10];
     oled_write_P(PSTR("Layer: "), false);
     switch (layer_state) {
-    case L_BASE:
-        oled_write_P(PSTR("Default"), false);
-        break;
-    case L_RAISE:
-        oled_write_P(PSTR("Raise"), false);
-        break;
-    case L_LOWER:
-        oled_write_P(PSTR("Lower"), false);
-        break;
-    case L_ADJUST:
-    case L_ADJUST_TRI:
-        oled_write_P(PSTR("Adjust"), false);
-        break;
-    default:
-        oled_write_P(PSTR("Undef-"), false);
-        snprintf(buf, sizeof(buf), "%ld", layer_state);
-        oled_write(buf, false);
+        case L_BASE:
+            oled_write_P(PSTR("Default"), false);
+            break;
+        case L_RAISE:
+            oled_write_P(PSTR("Raise"), false);
+            break;
+        case L_LOWER:
+            oled_write_P(PSTR("Lower"), false);
+            break;
+        case L_ADJUST:
+        case L_ADJUST_TRI:
+            oled_write_P(PSTR("Adjust"), false);
+            break;
+        default:
+            oled_write_P(PSTR("Undef-"), false);
+            snprintf(buf, sizeof(buf), "%ld", layer_state);
+            oled_write(buf, false);
     }
     oled_write_P(PSTR("\n"), false);
 }
 
 void render_status(struct CharacterMatrix* matrix) {
     // Render to mode icon
-    static const char os_logo[][2][3] PROGMEM = {{{0x95, 0x96, 0}, {0xb5, 0xb6, 0}},
-                                                 {{0x97, 0x98, 0}, {0xb7, 0xb8, 0}}};
+    static const char os_logo[][2][3] PROGMEM = {{{0x95, 0x96, 0}, {0xb5, 0xb6, 0}}, {{0x97, 0x98, 0}, {0xb7, 0xb8, 0}}};
     if (is_mac_mode()) {
         oled_write_P(os_logo[0][0], false);
         oled_write_P(PSTR("\n"), false);
@@ -279,25 +269,25 @@ void render_status(struct CharacterMatrix* matrix) {
     render_rgbled_status(true, matrix);
 }
 
-#if OLED_UPDATE_INTERVAL > 0
+#    if OLED_UPDATE_INTERVAL > 0
 uint16_t oled_update_timeout;
-#endif
+#    endif
 
 void iota_gfx_task_user(void) {
     struct CharacterMatrix matrix;
 
-#if DEBUG_TO_SCREEN
+#    if DEBUG_TO_SCREEN
     if (debug_enable) {
         return;
     }
-#endif
+#    endif
 
-#if OLED_UPDATE_INTERVAL > 0
+#    if OLED_UPDATE_INTERVAL > 0
     if (timer_elapsed(oled_update_timeout) < OLED_UPDATE_INTERVAL) {
         return;
     }
     oled_update_timeout = timer_read();
-#endif
+#    endif
     matrix_clear(&matrix);
     if (is_keyboard_master()) {
         render_status(&matrix);
