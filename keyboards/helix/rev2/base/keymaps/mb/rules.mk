@@ -6,11 +6,12 @@ LTO_ENABLE = yes  # if firmware size over limit, try this option
 # you can uncomment and edit follows 7 Variables
 #  jp: 以下の7つの変数を必要に応じて編集し、コメントアウトをはずします。
 OLED_ENABLE = yes            # OLED_ENABLE
-# LOCAL_GLCDFONT = no         # use each keymaps "helixfont.h" insted of "common/glcdfont.c"
+LOCAL_GLCDFONT = no         # use each keymaps "helixfont.h" insted of "common/glcdfont.c"
 LED_BACK_ENABLE = yes       # LED backlight (Enable WS2812 RGB underlight.)
 # LED_UNDERGLOW_ENABLE = yes   # LED underglow (Enable WS2812 RGB underlight.)
 LED_ANIMATIONS = yes        # LED animations
-# IOS_DEVICE_ENABLE = no      # connect to IOS device (iPad,iPhone)
+IOS_DEVICE_ENABLE = no      # connect to IOS device (iPad,iPhone)
+OS_DETECTION_ENABLE = yes
 
 # OLED_ENABLE が yes のとき
 #   OLED_SELECT が core ならば QMK 標準の oled_dirver.c を使用します。
@@ -23,6 +24,7 @@ OLED_SELECT = core
 COMBO_ENABLE = yes
 SWAP_HANDS_ENABLE = yes
 EXTRAKEY_ENABLE = yes
+MAGIC_ENABLE = yes
 
 ifeq ($(strip $(OLED_ENABLE)), yes)
     SRC += oled_display.c

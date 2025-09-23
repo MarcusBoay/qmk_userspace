@@ -221,6 +221,22 @@ void matrix_init_user(void) {
     #endif
 }
 
+// void keyboard_post_init_user(void) {
+  // hacky thing
+  // swap ctl and gui if on mac
+  // wait_ms(500);
+  // if (detected_host_os() == OS_MACOS) {
+  //   tap_code16(QK_MAGIC_SWAP_CTL_GUI);
+  // } else {
+  //   tap_code16(QK_MAGIC_UNSWAP_CTL_GUI);
+  // }
+
+  // if ()
+  // eeconfig_read_keymap(&keymap_config);
+  // keymap_config.swap_lctl_lgui = ;
+  // eeconfig_update_keymap(&keymap_config);
+  // clear_keyboard(); // clear to prevent stuck keys
+// }
 
 #ifdef AUDIO_ENABLE
 

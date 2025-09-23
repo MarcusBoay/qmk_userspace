@@ -25,7 +25,7 @@
 enum layer_number {
     _QWERTY = 0,
     _COLEMAK,
-    _MAPLE,
+    // _MAPLE,
     _LOWER,
     _RAISE,
     _ADJUST,
@@ -36,7 +36,7 @@ enum layer_number {
 #define L_BASE    0
 #define L_QWERTY  (1 << _QWERTY)
 #define L_COLEMAK (1 << _COLEMAK)
-#define L_MAPLE   (1 << _MAPLE)
+// #define L_MAPLE   (1 << _MAPLE)
 #define L_LOWER   (1 << _LOWER)
 #define L_RAISE   (1 << _RAISE)
 #define L_ADJUST  (1 << _ADJUST)
@@ -78,9 +78,9 @@ static void render_layer_status(void) {
     case L_COLEMAK:
         oled_write_P(PSTR("Colemak"), false);
         break;
-    case L_MAPLE:
-        oled_write_P(PSTR("MapleStory"), false);
-        break;
+    // case L_MAPLE:
+    //     oled_write_P(PSTR("MapleStory"), false);
+    //     break;
     }
 
     if (layer_state != L_BASE) {
@@ -110,20 +110,27 @@ static void render_layer_status(void) {
 
 void render_status(void) {
     // Render to mode icon
-    // static const char os_logo[][2][3] PROGMEM = {{{0x95, 0x96, 0}, {0xb5, 0xb6, 0}},
-    //                                              {{0x97, 0x98, 0}, {0xb7, 0xb8, 0}}};
-    // if (is_mac_mode()) {
-    //     oled_write_P(os_logo[0][0], false);
-    //     oled_write_P(PSTR("\n"), false);
-    //     oled_write_P(os_logo[0][1], false);
-    // } else {
-    //     oled_write_P(os_logo[1][0], false);
-    //     oled_write_P(PSTR("\n"), false);
-    //     oled_write_P(os_logo[1][1], false);
-    // }
+    static const char os_logo[][2][3] PROGMEM = {{{0x95, 0x96, 0}, {0xb5, 0xb6, 0}},
+                                                 {{0x99, 0x9a, 0}, {0xb9, 0xba, 0}}};
+    // oled_write_P(PSTR("    "), false);
+    switch (detected_host_os()) {
+        case OS_MACOS:
+            oled_write_P(os_logo[0][0], false);
+            oled_write_P(PSTR("\n"), false);
+            oled_write_P(os_logo[0][1], false);
+            break;
+        case OS_LINUX:
+            oled_write_P(os_logo[1][0], false);
+            oled_write_P(PSTR("\n"), false);
+            oled_write_P(os_logo[1][1], false);
+            break;
+        default:
+            oled_write_P(PSTR("wtf?"), false);
+            oled_write_P(PSTR("\n"), false);
+            oled_write_P(PSTR("bruh"), false);
+            break;
+    }
 
-    // oled_write_P(PSTR(" "), false);
-    oled_write_P(PSTR("\n"), false);
     oled_write_P(PSTR(" "), false);
     render_layer_status();
 
