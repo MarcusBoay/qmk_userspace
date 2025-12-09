@@ -68,18 +68,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_LOWER] = LAYOUT(
         KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
-        KC_TAB,  XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,                     XXXXXXX, KC_UNDS, KC_PLUS, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_BSPC, XXXXXXX, KC_F5,   KC_F6,   KC_F7,   KC_F8,                     XXXXXXX, KC_MINUS,KC_EQL,  XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_TAB,  XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_BSPC, XXXXXXX, KC_F5,   KC_F6,   KC_F7,   KC_F8,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS,
         KC_LSFT, XXXXXXX, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         KC_LCTL, LOWER,   KC_LGUI, KC_LALT, RAISE,   KC_SPC,  SH_MON,  LOWER,   KC_LGUI, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, LOWER
     ),
 
     [_RAISE] = LAYOUT(
         KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
-        KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
-        KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_CAPS,
-        KC_LSFT, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_GRV,  XXXXXXX, XXXXXXX, KC_PIPE, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_RSFT,
-        KC_LCTL, LOWER,   KC_LGUI, KC_LALT, RAISE,   KC_SPC,  SH_MON,  LOWER,   KC_LGUI, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, LOWER
+        KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSLS,
+        KC_DEL,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_QUOT,
+        KC_LSFT, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR, KC_GRV,  XXXXXXX, XXXXXXX, KC_PIPE, KC_MINUS,KC_PLUS, KC_UNDS, KC_EQL,  KC_RSFT,
+        KC_LCTL, LOWER,   KC_LGUI, KC_LALT, RAISE,   KC_SPC,  SH_MON,  LOWER,   KC_LGUI, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  LOWER
     ),
 
     [_ADJUST] = LAYOUT(
