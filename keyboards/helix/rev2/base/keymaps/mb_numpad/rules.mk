@@ -17,6 +17,7 @@ LTO_ENABLE = yes  # if firmware size over limit, try this option
 #   If OLED_SELECT is 'core', use QMK standard oled_dirver.c.
 #   If OLED_SELECT is other than 'core', use helix/local_drivers/ssd1306.c.
 OLED_SELECT = core
+MOUSEKEY_ENABLE = yes
 
 ifeq ($(strip $(OLED_ENABLE)), yes)
     SRC += oled_display.c

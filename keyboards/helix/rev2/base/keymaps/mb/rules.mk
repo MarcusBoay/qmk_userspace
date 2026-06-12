@@ -24,7 +24,7 @@ OLED_SELECT = core
 COMBO_ENABLE = yes
 SWAP_HANDS_ENABLE = yes
 EXTRAKEY_ENABLE = yes
-MAGIC_ENABLE = yes
+MOUSEKEY_ENABLE = yes
 
 ifeq ($(strip $(OLED_ENABLE)), yes)
     SRC += oled_display.c
